@@ -2,19 +2,76 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ApiController extends AbstractController
+class ApiController
 {
-    /**
-     * @Route("/api", name="api")
-     */
-    public function index()
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ApiController.php',
-        ]);
-    }
+  /**
+   * @var int HTTP ステータスコード
+   *
+   * デフォルト：200 (OK)
+   */
+  protected $statusCode = 200;
+
+
+  /**
+   * ステータスコードを取得する
+   *
+   * @return int
+   */
+  public function getStatusCode(): int
+  {
+    return $this->statusCode;
+  }
+
+  /**
+   * ステータスコードを設定する
+   *
+   * @param int $statusCode
+   * @return self
+   */
+  public function setStatusCode($statusCode): self
+  {
+    $this->statusCode = $statusCode;
+
+    return $this;
+  }
+
+  /**
+   * jsonデータを返す
+   *
+   * @param array $data
+   * @param array $headers
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   */
+  public function respond($data, $headers = [])
+  {
+    return new JsonResponse($data, $this->getStatusCode(), $headers);
+  }
+
+  /**
+   * jsonデータとエラーメッセージを返す
+   *
+   * @param string t$errors
+   * @param array $headers
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   */
+  public function respondWithErrors($errors, $headers = [])
+  {
+    $data = ['error' => $errors];
+
+    return new JsonResponse($data, $this->getStatusCode(), $headers);
+  }
+
+  /**
+   * 401 Unauthorized
+   *
+   * @param string $message
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   */
+  public function respondUnauthorized($message = 'Not authorized')
+  {
+    return $this->setStatusCode(401)->respondWithErrors($message);
+  }
+
 }
