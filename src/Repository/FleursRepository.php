@@ -2,31 +2,22 @@
 
 namespace App\Repository;
 
-use App\Service\Firebase; // TODO: 親リポジトリに書く
+use App\Service\Firebase;
 
 class FleursRepository
 {
   /**
-   * @var Firebase
-   * TODO: 親リポジトリに書く
-   */
-  private $firebase;
-
-  /**
    * @var mixed
-   * TODO: 親リポジトリに書く
    */
   private $firestore;
 
   /**
    * FleursRepository constructor.
    * @param Firebase $firebase
-   * TODO: 親リポジトリに書く
    */
   public function __construct(Firebase $firebase)
   {
-    $this->firebase = $firebase;
-    $this->firestore = $this->firebase->createFirestore();
+    $this->firestore = $firebase->createFirestore();
   }
 
   /**
