@@ -2,19 +2,17 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\FleursRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FleursController extends AbstractController
+class FleursController extends ApiController
 {
-    /**
-     * @Route("/fleurs", name="fleurs")
-     */
-    public function index()
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/FleursController.php',
-        ]);
-    }
+  /**
+   * @Route("/fleurs", methods="GET")
+   */
+  public function index(FleursRepository $fleursRepository)
+  {
+    $fleurs = $fleursRepository->getAllFleurs();
+    return $this->respond($fleurs);
+  }
 }

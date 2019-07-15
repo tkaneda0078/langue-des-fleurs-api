@@ -13,7 +13,6 @@ class ApiController
    */
   protected $statusCode = 200;
 
-
   /**
    * ステータスコードを取得する
    *
@@ -73,5 +72,4 @@ class ApiController
   {
     return $this->setStatusCode(401)->respondWithErrors($message);
   }
-
 }
