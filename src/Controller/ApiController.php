@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Class ApiController
+ */
 class ApiController
 {
   /**
